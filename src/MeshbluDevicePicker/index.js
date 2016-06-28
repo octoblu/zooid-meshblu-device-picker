@@ -6,31 +6,44 @@ import noop from 'lodash.noop'
 
 import 'react-select/dist/react-select.css'
 
-const propTypes = {
-  devices: PropTypes.array,
-  onSelection: PropTypes.func,
-}
-
 const defaultProps = {
   devices: [],
   onSelection: noop,
 }
 
-const MeshbluDevicePicker = ({ devices, onSelection }) => {
-  return (
-    <Select
-      options={devices}
-      onChange={onSelection}
-      placeholder="Device name..."
-      matchProp="name"
-      labelKey="name"
-      optionRenderer={({ name, uuid }) => {
-        if (name) return <span>{name}</span>
+const propTypes = {
+  devices: PropTypes.array,
+  onSelection: PropTypes.func,
+}
 
-        return <span>{uuid}</span>
-      }}
-    />
-  )
+class MeshbluDevicePicker extends React.Component {
+
+  state = {}
+
+  handleSelect = (device) => {
+    this.setState({selectedDevice: device})
+    this.props.onSelection(device)
+  }
+
+  render = () => {
+    return (
+      <Select
+        options={this.props.devices}
+        onChange={this.handleSelect}
+        placeholder="Device name..."
+        matchProp="any"
+        labelKey="name"
+        valueKey="name"
+        value={this.state.selectedDevice}
+        optionRenderer={({ name, uuid }) => {
+          if (name) return <span>{name}</span>
+
+          return <span>{uuid}</span>
+        }}
+      />
+    )
+  }
+
 }
 
 MeshbluDevicePicker.propTypes    = propTypes
