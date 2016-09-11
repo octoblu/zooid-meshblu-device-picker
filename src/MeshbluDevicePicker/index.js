@@ -9,11 +9,13 @@ import 'react-select/dist/react-select.css'
 const defaultProps = {
   devices: [],
   onSelection: noop,
+  defaultDevice: null
 }
 
 const propTypes = {
   devices: PropTypes.array,
   onSelection: PropTypes.func,
+  defaultDevice: PropTypes.object
 }
 
 class MeshbluDevicePicker extends React.Component {
@@ -34,7 +36,7 @@ class MeshbluDevicePicker extends React.Component {
         matchProp="any"
         labelKey="name"
         valueKey="name"
-        value={this.state.selectedDevice}
+        value={this.state.selectedDevice?this.state.selectedDevice:this.props.defaultDevice}
         optionRenderer={({ name, uuid }) => {
           if (name) return <span>{name}</span>
 
