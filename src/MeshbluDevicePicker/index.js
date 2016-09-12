@@ -2,15 +2,7 @@ import React, { PropTypes } from 'react'
 import Select from 'react-select'
 import noop from 'lodash.noop'
 
-// import styles from './styles.css'
-
 import 'react-select/dist/react-select.css'
-
-const defaultProps = {
-  devices: [],
-  onSelection: noop,
-  defaultDevice: null
-}
 
 const propTypes = {
   devices: PropTypes.array,
@@ -18,9 +10,20 @@ const propTypes = {
   defaultDevice: PropTypes.object
 }
 
-class MeshbluDevicePicker extends React.Component {
+const defaultProps = {
+  devices: [],
+  onSelection: noop,
+  defaultDevice: null
+}
 
-  state = {}
+class MeshbluDevicePicker extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      selectedDevice: this.props.defaultDevice
+    }
+  }
 
   handleSelect = (device) => {
     this.setState({selectedDevice: device})
@@ -36,16 +39,14 @@ class MeshbluDevicePicker extends React.Component {
         matchProp="any"
         labelKey="name"
         valueKey="name"
-        value={this.state.selectedDevice?this.state.selectedDevice:this.props.defaultDevice}
+        value={this.state.selectedDevice}
         optionRenderer={({ name, uuid }) => {
           if (name) return <span>{name}</span>
-
           return <span>{uuid}</span>
         }}
       />
     )
   }
-
 }
 
 MeshbluDevicePicker.propTypes    = propTypes
