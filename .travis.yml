@@ -1,8 +1,6 @@
 language: node_js
 node_js:
 - '5'
-branches:
-  only:
   - /^v[0-9]/
 
 before_deploy:
@@ -20,3 +18,5 @@ deploy:
   on:
     tags: true
     branches: true
+after_success:
+- bash <(curl -s https://codecov.io/bash)
