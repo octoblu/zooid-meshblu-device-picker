@@ -14,7 +14,7 @@
     "lint:css": "stylelint ./src/**/*.css",
     "lint:css:fix": "stylefmt ./src/**/*.css",
     "build": "webpack",
-    "test": "istanbul cover _mocha -- -R spec --require coffee-coverage/register-istanbul && mocha --reporter json > coverage/mocha.json",
+    "test": "nyc --require babel-core/register --require babel-polyfill mocha",
     "test:watch": "mocha -w -R mocha-multi --reporter-options spec=-,mocha-osx-reporter=-"
   },
   "repository": {
